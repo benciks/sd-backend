@@ -1,0 +1,71 @@
+{
+    "name": "template_express_api",
+    "version": "0.0.1",
+    "repository": "https://github.com/dokedu/template_express_api.git",
+    "author": "Felix Hromadko <felix@dokedu.org>",
+    "license": "MIT",
+    "main": "dist/bootstrap.js",
+    "scripts": {
+        "compile": "tsc",
+        "dev": "tsc --watch",
+        "start": "node dist/bootstrap.js",
+        "startDebug": "node --inspect=0.0.0.0 dist/bootstrap.js",
+        "test": "mocha --timeout 5000 --recursive -r dist/test/_bootstrap.js dist/test/**/*.test.js",
+        "lint-check": "prettier './src/**/*.{ts,tsx}' && eslint './src/**/*.{ts,tsx}'",
+        "lint-fix": "prettier --write './src/**/*.{ts,tsx}' && eslint --cache --fix './src/**/*.{ts,tsx}'",
+        "lint-staged-fix": "pretty-quick --staged && lint-staged"
+    },
+    "lint-staged": {
+        "*.{ts,js}": "eslint --cache --fix"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "yarn lint-staged-fix"
+        }
+    },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "bcrypt": "^5.0.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-openapi-validator": "^4.9.0",
+        "js-yaml": "^3.14.0",
+        "jsonwebtoken": "^8.5.1",
+        "nanoid": "^3.1.20",
+        "pg": "^8.5.1",
+        "pino": "^6.5.0",
+        "pino-pretty": "^4.1.0",
+        "reflect-metadata": "^0.1.13",
+        "source-map-support": "^0.5.19",
+        "typeorm": "^0.2.25"
+    },
+    "devDependencies": {
+        "@types/axios": "^0.14.0",
+        "@types/bcrypt": "^3.0.0",
+        "@types/chai": "^4.2.12",
+        "@types/cors": "^2.8.7",
+        "@types/express": "^4.17.7",
+        "@types/js-yaml": "^3.12.5",
+        "@types/jsonwebtoken": "^8.5.0",
+        "@types/mocha": "^8.0.3",
+        "@types/nanoid": "^2.1.0",
+        "@types/node": "^14.0.27",
+        "@types/pino": "^6.3.0",
+        "@typescript-eslint/eslint-plugin": "^4.9.1",
+        "@typescript-eslint/parser": "^4.9.1",
+        "chai": "^4.2.0",
+        "eslint": "^7.15.0",
+        "eslint-config-prettier": "^7.0.0",
+        "eslint-plugin-prettier": "^3.2.0",
+        "husky": "^4.3.5",
+        "lint-staged": "^10.5.3",
+        "mocha": "^8.1.0",
+        "nodemon": "^2.0.4",
+        "nyc": "^15.1.0",
+        "prettier": "^2.2.1",
+        "pretty-quick": "^3.1.0",
+        "sqlite3": "^5.0.0",
+        "typescript": "^3.9.7"
+    }
+}

@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+    title: Template
+    version: '1.0'
+servers:
+    - url: 'http://localhost:3000'
+paths:
+    /:
+        get:
+            summary: Home
+            operationId: get-home
+            responses:
+                '200':
+                    description: OK
+    /auth:
+        post:
+            summary: Login
+            operationId: post-auth
+            responses:
+                '200':
+                    description: OK
+                '400':
+                    description: Bad Request
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+                            required:
+                                - email
+                                - password
+    /users/me:
+        get:
+            summary: Get current user
+            tags: []
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/User'
+            operationId: get-users-me
+            description: ''
+components:
+    schemas:
+        User:
+            title: User
+            type: object
+            properties:
+                id:
+                    type: string
+                email:
+                    type: string
+            required:
+                - id
+                - email
