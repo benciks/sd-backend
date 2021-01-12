@@ -6,6 +6,9 @@ export class User extends BaseEntity implements IUser {
     @PrimaryColumn()
     id: string = randId()
 
+    @Column()
+    name: string
+
     @Column({ unique: true })
     email: string
 

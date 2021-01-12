@@ -6,13 +6,9 @@ export const sharedSeed = async () => {
     if ((await User.count()) === 0) {
         logger.debug('Seeding the db...')
         const u1 = new User()
-        u1.email = 'felix@dokedu.org'
-        u1.password = bcrypt.hashSync('12345678', 10)
+        u1.name = process.env.USER_NAME
+        u1.email = process.env.USER_EMAIL
+        u1.password = bcrypt.hashSync(process.env.USER_PASS, 10)
         await u1.save()
-
-        const u2 = new User()
-        u2.email = 'tom@dokedu.org'
-        u2.password = bcrypt.hashSync('12345687', 10)
-        await u2.save()
     }
 }

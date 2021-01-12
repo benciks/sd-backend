@@ -2,16 +2,19 @@ import { User } from './entity/user'
 import { getConnectionManager, Connection } from 'typeorm'
 import { devSeed } from './seed/devSeed'
 import { testSeed } from './seed/testSeed'
-import { SqliteConnectionOptions } from 'typeorm/driver/sqlite/SqliteConnectionOptions'
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
 
 export let connection: Connection
 export const initializeDB = async () => {
-    const options: SqliteConnectionOptions = {
-        type: 'sqlite',
-        database: './data/db.sqlite',
+    const options: PostgresConnectionOptions = {
+        type: 'postgres',
         entities: [User],
+        database: process.env.DB_NAME,
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT) || 5432,
+        username: process.env.DB_PORT,
+        password: process.env.DB_PASS,
         synchronize: true,
-        logging: true,
     }
 
     try {
