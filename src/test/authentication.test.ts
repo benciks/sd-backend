@@ -30,7 +30,7 @@ describe('Authentication', function () {
         expect(res.status).eq(400)
 
         res = await api.post('/auth', {
-            email: 'felix@dokedu.org',
+            email: 'test@test.com',
             password: '1234',
         })
         expect(res.status).eq(400)
@@ -38,8 +38,8 @@ describe('Authentication', function () {
     describe('/auth', function () {
         it('accepts right credentials and returns jwt', async function () {
             const res = await api.post<LoginResponse>('/auth', {
-                email: 'felix@dokedu.org',
-                password: '12345678',
+                email: process.env.USER_EMAIL,
+                password: process.env.USER_PASS,
             })
             expect(res.status).eq(200)
             expect(res.data).key('jwt')
@@ -53,7 +53,7 @@ describe('Authentication', function () {
 
             //check jwt body
             const payload = jwt.decode(res.data.jwt) as JWTPayload
-            expect(payload.userId).eq((await User.findOne({ email: 'felix@dokedu.org' })).id)
+            expect(payload.userId).eq((await User.findOne({ email: process.env.USER_EMAIL })).id)
         })
         it('rejects wrong credentials', async function () {
             const res = await api.post<LoginResponse>('/auth', {

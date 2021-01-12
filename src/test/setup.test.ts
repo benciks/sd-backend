@@ -15,7 +15,6 @@ before('Testing Setup', async function () {
     const users = await User.find()
     testData.user = {
         u1: users[0].id,
-        u2: users[1].id,
     }
 })
 
@@ -30,7 +29,6 @@ export const api = axios.create({
 export const testData = {
     user: {
         u1: '',
-        u2: '',
     },
 }
 
