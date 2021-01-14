@@ -47,6 +47,20 @@ paths:
                                 $ref: '#/components/schemas/User'
             operationId: get-users-me
             description: ''
+    /schools:
+        get:
+            summary: Your GET endpoint
+            tags: []
+            responses:
+                '200':
+                    description: OK
+            operationId: get-schools
+        post:
+            summary: ''
+            operationId: post-schools
+            responses:
+                '200':
+                    description: OK
 components:
     schemas:
         User:

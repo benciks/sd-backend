@@ -8,7 +8,9 @@ export async function checkAuthHeader(req: Request, res: Response, next: NextFun
     let payload: JWTPayload | null = null
 
     if (token) {
-        if (!jwt.verify(token, JWTSecret)) {
+        try {
+            jwt.verify(token, JWTSecret)
+        } catch {
             return res.status(401).send({ error: 'Invalid Authorization JWT!' })
         }
 
