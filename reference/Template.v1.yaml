@@ -55,12 +55,94 @@ paths:
                 '200':
                     description: OK
             operationId: get-schools
+        parameters: []
         post:
             summary: ''
             operationId: post-schools
             responses:
                 '200':
                     description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            description: ''
+                            additionalProperties: false
+                            properties:
+                                name:
+                                    type: string
+                                url:
+                                    type: string
+                                    format: uri
+                                address:
+                                    type: string
+                                city:
+                                    type: string
+                                postal:
+                                    type: number
+                                description:
+                                    type: string
+                            required:
+                                - name
+                                - url
+                                - address
+                                - city
+                                - postal
+                                - description
+                description: ''
+    '/schools/{id}':
+        parameters:
+            - schema:
+                  type: string
+              name: id
+              in: path
+              required: true
+        get:
+            summary: Your GET endpoint
+            tags: []
+            responses:
+                '200':
+                    description: OK
+            operationId: get-schools-id
+            parameters: []
+            description: Gets school by given id.
+        patch:
+            summary: ''
+            operationId: patch-schools-id
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            description: ''
+                            additionalProperties: false
+                            properties:
+                                name:
+                                    type: string
+                                url:
+                                    type: string
+                                    format: uri
+                                address:
+                                    type: string
+                                city:
+                                    type: string
+                                postal:
+                                    type: number
+                                description:
+                                    type: string
+                description: ''
+            description: Updates school.
+        delete:
+            summary: ''
+            operationId: delete-schools-id
+            responses:
+                '200':
+                    description: OK
+            description: Deletes school.
 components:
     schemas:
         User:
@@ -74,3 +156,4 @@ components:
             required:
                 - id
                 - email
+    securitySchemes: {}
