@@ -143,6 +143,74 @@ paths:
                 '200':
                     description: OK
             description: Deletes school.
+    /articles:
+        get:
+            summary: Your GET endpoint
+            tags: []
+            responses:
+                '200':
+                    description: OK
+            operationId: get-articles
+        post:
+            summary: ''
+            operationId: post-articles
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                name:
+                                    type: string
+                                url:
+                                    type: string
+                                content:
+                                    type: string
+            parameters: []
+    '/articles/{id}':
+        parameters:
+            - schema:
+                  type: string
+              name: id
+              in: path
+              required: true
+        get:
+            summary: Your GET endpoint
+            tags: []
+            responses:
+                '200':
+                    description: OK
+            operationId: get-articles-id
+        patch:
+            summary: ''
+            operationId: patch-articles-id
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            description: ''
+                            additionalProperties: false
+                            properties:
+                                name:
+                                    type: string
+                                url:
+                                    type: string
+                                content:
+                                    type: string
+        delete:
+            summary: ''
+            operationId: delete-articles-id
+            responses:
+                '200':
+                    description: OK
 components:
     schemas:
         User:
