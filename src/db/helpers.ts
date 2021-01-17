@@ -1,4 +1,4 @@
-import { customAlphabet } from 'nanoid'
+import { customAlphabet, urlAlphabet } from 'nanoid'
 
 export function hideFields<T>(object: any, hidden: string[]): T {
     return Object.keys(object)
@@ -10,3 +10,4 @@ export function hideFields<T>(object: any, hidden: string[]): T {
 }
 
 export const randId = customAlphabet('6789BCDFGHJKLMNPQRTWbcdfghjkmnpqrtwz', 10)
+export const randToken = customAlphabet(urlAlphabet, 32)

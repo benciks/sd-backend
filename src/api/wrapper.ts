@@ -16,7 +16,7 @@ export const wrap = (fn: WrapperFunction): RequestHandler => {
                 return res.status(404).send({ error: e.message })
             }
             logger.error('Internal server error occurred: ', e)
-            res.status(500).send({ error: 'Internal Error' })
+            res.status(500).send({ error: 'Internal Error: ' + e })
         }
 
         Promise.resolve(fn(req, res))

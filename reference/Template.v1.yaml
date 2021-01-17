@@ -12,7 +12,7 @@ paths:
             responses:
                 '200':
                     description: OK
-    /auth:
+    /login:
         post:
             summary: Login
             operationId: post-auth
@@ -34,6 +34,7 @@ paths:
                             required:
                                 - email
                                 - password
+        parameters: []
     /users/me:
         get:
             summary: Get current user
@@ -211,6 +212,54 @@ paths:
             responses:
                 '200':
                     description: OK
+    /inviteUser:
+        post:
+            summary: ''
+            operationId: post-inviteUser
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                email:
+                                    type: string
+                                    format: email
+                            required:
+                                - email
+    /registration:
+        post:
+            summary: ''
+            operationId: post-register
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                token:
+                                    type: string
+                                name:
+                                    type: string
+                                email:
+                                    type: string
+                                    format: email
+                                password:
+                                    type: string
+                            required:
+                                - token
+                                - name
+                                - email
+                                - password
+        parameters: []
 components:
     schemas:
         User:

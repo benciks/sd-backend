@@ -1,4 +1,5 @@
 import { User } from './entity/user'
+import { UserInvite } from './entity/userInvite'
 import { School } from './entity/school'
 import { Article } from './entity/article'
 import { getConnectionManager, Connection } from 'typeorm'
@@ -10,7 +11,7 @@ export let connection: Connection
 export const initializeDB = async () => {
     const options: PostgresConnectionOptions = {
         type: 'postgres',
-        entities: [User, School, Article],
+        entities: [User, UserInvite, School, Article],
         database: process.env.DB_NAME,
         host: process.env.DB_HOST,
         port: parseInt(process.env.DB_PORT) || 5432,
