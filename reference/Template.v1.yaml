@@ -305,6 +305,14 @@ paths:
                                 - email
                                 - password
         parameters: []
+    /users:
+        get:
+            summary: Your GET endpoint
+            tags: []
+            responses:
+                '200':
+                    description: OK
+            operationId: get-users
 components:
     schemas:
         User:

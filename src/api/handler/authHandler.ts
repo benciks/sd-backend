@@ -15,7 +15,6 @@ export default class AuthHandler {
         router.post('/login', wrap(this.login))
         router.post('/login/forgot', wrap(this.requestPassword))
         router.post('/login/reset', wrap(this.resetPassword))
-        router.get('/users/me', routeGuard(), wrap(this.getUserMe))
         router.post('/inviteUser', routeGuard(), wrap(this.inviteUser))
         router.post('/registration', wrap(this.registerUser))
     }
@@ -36,10 +35,6 @@ export default class AuthHandler {
                 JWTSecret,
             ),
         } as LoginResponse
-    }
-
-    async getUserMe(req: Express.Request) {
-        return await req.getUser()
     }
 
     async registerUser(req: Express.Request) {
