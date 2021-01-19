@@ -1,7 +1,7 @@
 import * as nodemailer from 'nodemailer'
 import { Transporter } from 'nodemailer'
 import { logger } from '../logger'
-import { UserInvite } from '../db/entity/userInvite'
+import { UserToken } from '../db/entity/userToken'
 import fs from 'fs'
 import ejs from 'ejs'
 
@@ -36,7 +36,7 @@ export default class MailService {
         return this.initialized
     }
 
-    static async sendInvite(invite: UserInvite) {
+    static async sendInvite(invite: UserToken) {
         if (!this.checkInitialized()) return
 
         try {
@@ -48,6 +48,28 @@ export default class MailService {
                 to: invite.email,
                 html: content,
                 subject: 'Boli ste pozvaní do Študuj Dopravu',
+            })
+        } catch (e) {
+            logger.error('error while sending email: ' + e)
+            return false
+        }
+    }
+
+    static async sendPasswordReset(invite: UserToken) {
+        if (!this.checkInitialized()) return
+
+        try {
+            const content = await ejs.renderFile(
+                fs.realpathSync('./dist/service/mail_template/request_password_reset.html.ejs'),
+                {
+                    url: `http://localhost:3000/login/reset?token=${invite.token}`,
+                },
+            )
+            await this.transport.sendMail({
+                from: EMAIL_FROM,
+                to: invite.email,
+                html: content,
+                subject: 'Password change request',
             })
         } catch (e) {
             logger.error('error while sending email: ' + e)

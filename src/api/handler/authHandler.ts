@@ -5,7 +5,7 @@ import { User } from '../../db/entity/user'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { routeGuard } from '../middleware/routeGuard'
-import { UserInvite } from '../../db/entity/userInvite'
+import { UserToken } from '../../db/entity/userToken'
 import MailService from '../../service/mailService'
 
 export const JWTSecret = 'mimhJctdqC8Em4mWBVSBjbjnNSzWLc22'
@@ -13,6 +13,8 @@ export const JWTSecret = 'mimhJctdqC8Em4mWBVSBjbjnNSzWLc22'
 export default class AuthHandler {
     async initialize() {
         router.post('/login', wrap(this.login))
+        router.post('/login/forgot', wrap(this.requestPassword))
+        router.post('/login/reset', wrap(this.resetPassword))
         router.get('/users/me', routeGuard(), wrap(this.getUserMe))
         router.post('/inviteUser', routeGuard(), wrap(this.inviteUser))
         router.post('/registration', wrap(this.registerUser))
@@ -42,7 +44,7 @@ export default class AuthHandler {
 
     async registerUser(req: Express.Request) {
         const body = req.body
-        const invite = await UserInvite.findOne({ where: { email: body.email } })
+        const invite = await UserToken.findOne({ where: { email: body.email } })
 
         if (!invite) {
             throw new HttpBadRequestError('This email address is not on whitelist.')
@@ -54,6 +56,7 @@ export default class AuthHandler {
         }
 
         await User.new(body.name, body.email, body.password)
+        await invite.remove()
     }
 
     async inviteUser(req: Express.Request) {
@@ -64,9 +67,51 @@ export default class AuthHandler {
             throw new HttpBadRequestError('User already exists')
         }
 
-        await UserInvite.New(body.email)
+        await UserToken.New(body.email)
 
-        const invite = await UserInvite.findOne({ where: { email: body.email } })
+        const invite = await UserToken.findOne({ where: { email: body.email } })
         await MailService.sendInvite(invite)
+    }
+
+    async requestPassword(req: Express.Request) {
+        const body = req.body
+        const user = await User.findOne({ where: { email: body.email } })
+
+        if (!user) {
+            throw new HttpBadRequestError("User doesn't exist")
+        }
+
+        await UserToken.New(body.email)
+
+        const invite = await UserToken.findOne({ where: { email: body.email } })
+        await MailService.sendPasswordReset(invite)
+    }
+
+    async resetPassword(req: Express.Request) {
+        const body = req.body
+        const user = await User.findOne({ where: { email: body.email } })
+        const invite = await UserToken.findOne({ where: { email: body.email } })
+
+        if (!user) {
+            throw new HttpBadRequestError('Token or email is invalid.')
+        }
+
+        if (invite.email !== user.email) {
+            throw new HttpBadRequestError('Token or email is invalid.')
+        }
+
+        if (invite.validUntil.getTime() < new Date().getTime()) {
+            await invite.remove()
+            throw new HttpBadRequestError('Token or email is invalid.')
+        }
+
+        const password = bcrypt.hashSync(body.password, 10)
+
+        Object.assign(user, {
+            email: body.email,
+            password: password,
+        })
+        await user.save()
+        await invite.remove()
     }
 }

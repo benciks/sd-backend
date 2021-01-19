@@ -260,6 +260,51 @@ paths:
                                 - email
                                 - password
         parameters: []
+    /login/forgot:
+        post:
+            summary: ''
+            operationId: post-login-forgot
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                email:
+                                    type: string
+                                    format: email
+                            required:
+                                - email
+    /login/reset:
+        post:
+            summary: ''
+            operationId: post-login-renew
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                token:
+                                    type: string
+                                email:
+                                    type: string
+                                    format: email
+                                password:
+                                    type: string
+                            required:
+                                - token
+                                - email
+                                - password
+        parameters: []
 components:
     schemas:
         User:
