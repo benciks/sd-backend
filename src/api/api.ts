@@ -11,9 +11,10 @@ import * as OpenApiValidator from 'express-openapi-validator'
 
 export const app = express()
 export let appServer: Server
+
+registerCors()
 app.use(bodyParser.json())
 export const router = express.Router()
-registerCors()
 
 export default async function (port = 3000) {
     //import all handlers
