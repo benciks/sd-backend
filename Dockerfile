@@ -24,4 +24,4 @@ COPY ./reference/ /app/reference/
 COPY  /src/service/mail_template/ /app/dist/service/mail_template/
 COPY --from=BUILDER /app/dist/ /app/dist/
 
-CMD ["node", "/dist/bootstrap.js"]
+CMD ["node", "/app/dist/bootstrap.js"]
