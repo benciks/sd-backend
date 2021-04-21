@@ -20,7 +20,7 @@ export default class MailService {
         }
 
         this.transport = nodemailer.createTransport({
-            host: 'smtp.ethereal.email',
+            host: 'mail.trail.group',
             port: 587,
             auth: {
                 user: EMAIL_FROM,
