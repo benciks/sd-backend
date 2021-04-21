@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, BaseEntity, Column } from 'typeorm'
+import { Entity, PrimaryColumn, BaseEntity, Column, CreateDateColumn } from 'typeorm'
 import { randId } from '../helpers'
 import bcrypt from 'bcrypt'
 
@@ -14,11 +14,17 @@ export class User extends BaseEntity implements IUser {
     email: string
 
     @Column()
+    img: string
+
+    @Column()
     password: string
 
-    static new(name: string, email: string, password: string) {
+    @CreateDateColumn()
+    registredAt: Date
+
+    static new(name: string, email: string, password: string, img: string) {
         const u = new User()
-        Object.assign(u, { name, email })
+        Object.assign(u, { name, email, img })
         u.password = bcrypt.hashSync(password, 10)
 
         return u.save()

@@ -7,7 +7,7 @@ export function registerCors() {
             process.env.NODE_ENV === 'production'
                 ? ['https://', 'http://localhost:8080']
                 : ['localhost', 'localhost:3000', 'localhost:3001', 'http://localhost:8080'],
-        methods: ['GET', 'POST', 'DELETE'],
+        methods: ['GET', 'POST', 'PATCH', 'DELETE'],
         allowedHeaders: ['Authorization', 'content-type'],
     })
 

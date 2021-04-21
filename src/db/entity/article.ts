@@ -8,12 +8,21 @@ export class Article extends BaseEntity implements IArticle {
     @Column()
     name: string
 
+    @Column()
+    author: string
+
     @Column({ unique: true })
     url: string
+
+    @Column()
+    img: string
 
     @Column()
     content: string
 
     @UpdateDateColumn()
     updatedAt: Date
+
+    @Column()
+    status: string
 }

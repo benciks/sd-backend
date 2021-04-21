@@ -7,9 +7,9 @@ import { Article } from '../../db/entity/article'
 export default class ArticleHandler {
     async initialize() {
         router.get('/articles', wrap(this.getAllArticle))
-        router.get('/articles/:id', wrap(this.getArticle))
+        router.get('/articles/:url', wrap(this.getArticle))
         router.post('/articles', routeGuard(), wrap(this.addArticle))
-        router.patch('/articles/:id', routeGuard(), wrap(this.updateArticle))
+        router.patch('/articles/:url', routeGuard(), wrap(this.updateArticle))
         router.delete('/articles/:id', routeGuard(), wrap(this.deleteArticle))
     }
 
@@ -18,7 +18,7 @@ export default class ArticleHandler {
     }
 
     async getArticle(req: Express.Request) {
-        return Article.findOne({ where: { id: req.params.id } })
+        return Article.findOne({ where: { url: req.params.url } })
     }
 
     async addArticle(req: Express.Request) {
@@ -26,7 +26,7 @@ export default class ArticleHandler {
     }
 
     async updateArticle(req: Express.Request) {
-        const article = await Article.findOne({ where: { id: req.params.id } })
+        const article = await Article.findOne({ where: { url: req.params.url } })
 
         Object.assign(article, req.body)
         await article.save()

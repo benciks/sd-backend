@@ -48,6 +48,27 @@ paths:
                                 $ref: '#/components/schemas/User'
             operationId: get-users-me
             description: ''
+        patch:
+            summary: ''
+            operationId: patch-users-me
+            responses:
+                '200':
+                    description: OK
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                                name:
+                                    type: string
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+                                img:
+                                    type: string
     /schools:
         get:
             summary: Your GET endpoint
@@ -81,8 +102,10 @@ paths:
                                 city:
                                     type: string
                                 postal:
-                                    type: number
-                                description:
+                                    type: string
+                                img:
+                                    type: string
+                                status:
                                     type: string
                             required:
                                 - name
@@ -90,7 +113,8 @@ paths:
                                 - address
                                 - city
                                 - postal
-                                - description
+                                - img
+                                - status
                 description: ''
     '/schools/{id}':
         parameters:
@@ -132,8 +156,10 @@ paths:
                                 city:
                                     type: string
                                 postal:
-                                    type: number
-                                description:
+                                    type: string
+                                img:
+                                    type: string
+                                status:
                                     type: string
                 description: ''
             description: Updates school.
@@ -171,12 +197,25 @@ paths:
                                     type: string
                                 content:
                                     type: string
+                                author:
+                                    type: string
+                                img:
+                                    type: string
+                                status:
+                                    type: string
+                            required:
+                                - name
+                                - url
+                                - content
+                                - author
+                                - img
+                                - status
             parameters: []
-    '/articles/{id}':
+    '/articles/{url}':
         parameters:
             - schema:
                   type: string
-              name: id
+              name: url
               in: path
               required: true
         get:
@@ -185,10 +224,10 @@ paths:
             responses:
                 '200':
                     description: OK
-            operationId: get-articles-id
+            operationId: get-articles-url
         patch:
             summary: ''
-            operationId: patch-articles-id
+            operationId: patch-articles-url
             responses:
                 '200':
                     description: OK
@@ -206,9 +245,15 @@ paths:
                                     type: string
                                 content:
                                     type: string
+                                author:
+                                    type: string
+                                status:
+                                    type: string
+                                img:
+                                    type: string
         delete:
             summary: ''
-            operationId: delete-articles-id
+            operationId: delete-articles-url
             responses:
                 '200':
                     description: OK
@@ -253,6 +298,8 @@ paths:
                                     type: string
                                     format: email
                                 password:
+                                    type: string
+                                img:
                                     type: string
                             required:
                                 - token

@@ -18,8 +18,11 @@ export class School extends BaseEntity implements ISchool {
     city: string
 
     @Column()
-    postal: number
+    postal: string
 
     @Column()
-    description: string
+    img: string
+
+    @Column()
+    status: string
 }

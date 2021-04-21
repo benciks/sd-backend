@@ -5,7 +5,7 @@ import { UserToken } from '../db/entity/userToken'
 import fs from 'fs'
 import ejs from 'ejs'
 
-const EMAIL_FROM = 'oda.lynch@ethereal.email'
+const EMAIL_FROM = process.env.SMTP_EMAIL
 const SMTP_PASSWORD = process.env.SMTP_PASSWORD
 
 export default class MailService {
@@ -41,7 +41,7 @@ export default class MailService {
 
         try {
             const content = await ejs.renderFile(fs.realpathSync('./dist/service/mail_template/invite_user.html.ejs'), {
-                url: `http://localhost:3000/register?token=${invite.token}`,
+                url: `${process.env.NUXT_URL}/register/${invite.token}`,
             })
             await this.transport.sendMail({
                 from: EMAIL_FROM,
@@ -62,14 +62,13 @@ export default class MailService {
             const content = await ejs.renderFile(
                 fs.realpathSync('./dist/service/mail_template/request_password_reset.html.ejs'),
                 {
-                    url: `http://localhost:3000/login/reset?token=${invite.token}`,
+                    url: `${process.env.NUXT_URL}/login/reset/${invite.token}`,
                 },
             )
             await this.transport.sendMail({
                 from: EMAIL_FROM,
                 to: invite.email,
                 html: content,
-                subject: 'Password change request',
             })
         } catch (e) {
             logger.error('error while sending email: ' + e)

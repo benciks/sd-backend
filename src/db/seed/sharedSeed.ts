@@ -8,6 +8,7 @@ export const sharedSeed = async () => {
         const u1 = new User()
         u1.name = process.env.USER_NAME
         u1.email = process.env.USER_EMAIL
+        u1.img = ''
         u1.password = bcrypt.hashSync(process.env.USER_PASS, 10)
         await u1.save()
     }

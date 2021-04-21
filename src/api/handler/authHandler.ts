@@ -50,7 +50,7 @@ export default class AuthHandler {
             throw new HttpBadRequestError('Token has already expired.')
         }
 
-        await User.new(body.name, body.email, body.password)
+        await User.new(body.name, body.email, body.password, body.img)
         await invite.remove()
     }
 

@@ -3,12 +3,13 @@ import { wrap } from '../wrapper'
 import { routeGuard } from '../middleware/routeGuard'
 import { User } from '../../db/entity/user'
 import Express from 'express'
+import bcrypt from 'bcrypt'
 
 export default class UserHandler {
     async initialize() {
         router.get('/users', routeGuard(), wrap(this.getAllUsers))
         router.get('/users/me', routeGuard(), wrap(this.getUserMe))
-        router.post('/users/me', routeGuard(), wrap(this.updateUser))
+        router.patch('/users/me', routeGuard(), wrap(this.updateUser))
     }
 
     async getAllUsers() {
@@ -25,11 +26,15 @@ export default class UserHandler {
 
         const user = await User.findOne({ where: { id: currentUser.id } })
 
-        Object.assign(user, {
-            name: body.name,
-            email: body.email,
-            password: body.password,
-        })
+        const updateData = req.body
+
+        if (updateData.password) {
+            const hashedPassword = bcrypt.hashSync(updateData.password, 10)
+
+            updateData.password = hashedPassword
+        }
+
+        Object.assign(user, updateData)
 
         await user.save()
     }
