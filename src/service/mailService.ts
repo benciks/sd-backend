@@ -69,6 +69,7 @@ export default class MailService {
                 from: EMAIL_FROM,
                 to: invite.email,
                 html: content,
+                subject: 'Študuj dopravu - obnova hesla',
             })
         } catch (e) {
             logger.error('error while sending email: ' + e)
