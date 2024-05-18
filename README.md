@@ -1,5 +1,2 @@
-# Dokedu Admin API
-
-## Documentation
-
-[Open API 3](reference/Dokedu-Admin.v1.yaml)
+# sd-backend
+Small backend in node.js for a content managing web app for schools.
